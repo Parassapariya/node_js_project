@@ -1,33 +1,23 @@
-// const getdata = require('./connection');
-// find data using promiss handale
 
-            // getdata().then((res)=>{
-            //     res.find().toArray().then((data)=>{
-            //         console.log(data);
-            //     })
-            // });
-
-//find data using async and await use
-
-            // let data = async ()=>{
-            //     let dt = await getdata();
-            //     let paras = await dt.find().toArray();
-            //     console.log(paras);
-            // };
-            // data();
 
 const express = require('express');
-
+const bodyparser = require('body-parser')
 
 const app = express();
+app.use(bodyparser.urlencoded({ extended: true }));
 app.set('view engine','ejs');
 
+let demos = []; 
+
 app.get('/',(req,res)=>{
-    res.render('list')
+    res.render('demo',{todolist : demos});
 });
 
-app.post("/sub",(req,res)=>{
-   console.log(req.body.username); 
+app.post('/sub',(req,res)=>{
+  let demo = req.body.username; 
+  demos.push(demo);
+   res.redirect('/');
 });
+
 
 app.listen(2000);
